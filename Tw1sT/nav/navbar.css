@@ -1,0 +1,91 @@
+.navdiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: hsl(0, 0%, 0%);
+    padding: 10px 20px;
+}
+
+/* Logo */
+.logo-icon{
+    width: 50px;
+    height: 50px;
+    display: block;
+}
+
+/* Center nav items */
+.nav-center{
+    display: flex;
+    list-style: none;
+    gap: 100px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-center li a{
+    color: white;
+    text-decoration: none;
+}
+
+/* Sign in button */
+.nav-btn{
+    background-color: hsl(0, 100%, 30%);
+    border-radius: 10px;
+    padding: 10px;
+    width: 90px;
+    border: none;
+}
+
+.nav-btn a{
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav :hover{
+    background-color: aliceblue;
+}
+
+.nav-btn {
+    display: inline-block;
+    background-color: hsl(0, 100%, 30%);
+    margin-left: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    width: 90px;
+
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
+.nav-btn a {
+    display: block;             /* expands clickable area */
+    width: 100%;                /* full width inside button */
+    height: 100%;               /* full height inside button */
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.nav-btn:hover {
+    background-color: hsl(0, 100%, 50%);
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;  /* keeps it above other elements */
+}
+
+li a:hover {
+    color: hsl(0, 100%, 50%);
+}
+
+main {
+    margin-top: 100px; /* adjust this based on your navbar height */
+}

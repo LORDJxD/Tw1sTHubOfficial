@@ -1,0 +1,45 @@
+/* General page styles */
+body {
+    margin: 0;
+    background-color: hsl(0, 0%, 5%);
+    color: white;
+}
+
+.divider {
+    border: none;          /* remove default border */
+    height: 2px;           /* thickness */
+    background-color: hsl(0, 100%, 50%); /* color */
+    margin: 20px 0;        /* vertical spacing */
+    width: 100%;            /* optional width */
+    margin-left: auto;      /* center horizontally */
+    margin-right: auto;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+h1 {
+    text-align: center;
+}
+
+* {
+    text-decoration: none;
+}
+
+.logo-image {
+    margin-top: 20px;
+    width: 400px;
+    height: 400px;
+}
+
+.date-image {
+    width: 250px;
+    height: 250px;
+    margin-top: -75px;
+}
