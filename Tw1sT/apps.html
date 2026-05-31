@@ -3,32 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tw1sT</title>
+    <title>Tw1sT — Apps</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="nav/navbar.css">
 </head>
 <body>
-    <!-- Navbar placeholder -->
     <nav class="navbar" id="navbar"></nav>
 
-    <main>
-        <h3>This is the Home</h3>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores eum eius rerum architecto id cupiditate sint, praesentium temporibus aut sunt. Omnis nam eum amet beatae vero doloremque unde! Facilis, vel.</p>
-        
+    <main class="page-main apps-page">
+        <section class="page-hero">
+            <span class="eyebrow">Apps</span>
+        </section>
+
+        <section class="apps-grid" id="apps-grid">
+            <div class="skeleton">Loading apps...</div>
+        </section>
     </main>
 
-    <!-- Load navbar dynamically -->
-    <script src="nav/navbar.js"></script>
+    <div id="app-modal" class="modal hidden" aria-hidden="true">
+        <div class="modal-panel">
+            <button class="modal-close" aria-label="Close details">✕</button>
+            <div class="modal-content">
+                <h2 id="modal-title"></h2>
+                <a id="modal-play-button" class="btn btn-primary" href="#">Play</a>
+                <p id="modal-description"></p>
+                <p id="modal-howto" class="modal-controls"></p>
+            </div>
+        </div>
+    </div>
+    <div id="footer-placeholder"></div>
 
+    <script src="nav/navbar.js"></script>
+    <script src="nav/footer.js"></script>
+    <script src="nav/apps.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

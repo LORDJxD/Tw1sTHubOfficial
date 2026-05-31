@@ -1,0 +1,20 @@
+[
+  {
+    "date": "2026-05-30",
+    "title": "v1.4.0 — Major UI refresh",
+    "summary": "Introduced responsive landing page, dynamic header/footer, and improved navigation.",
+    "details": "Full redesign of the landing and navigation, added mobile-first behaviors, and performance improvements across pages."
+  },
+  {
+    "date": "2026-04-12",
+    "title": "v1.3.2 — Bug fixes",
+    "summary": "Fixed layout regressions on small screens and corrected link highlights.",
+    "details": "Patched menu toggle behavior and alignment issues in the navbar."
+  },
+  {
+    "date": "2026-02-18",
+    "title": "v1.3.0 — Feature additions",
+    "summary": "Added apps and updates pages and dynamic content loading.",
+    "details": "Introduced separate components for header and footer and made content modular."
+  }
+]
