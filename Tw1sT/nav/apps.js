@@ -4,19 +4,22 @@
             name: 'Browser Hub',
             description: 'A fast browser app with tabs, bookmarks, and secure browsing features.',
             howTo: 'Open the app, choose a site, and use the toolbar to navigate or save bookmarks.',
-            page: 'browser-hub.html'
+            page: 'browser-hub.html',
+            icon: 'res/browser-hub.png'
         },
         {
             name: 'Media Vault',
             description: 'A lightweight media manager for audio and video playback directly in the browser.',
             howTo: 'Select a media file, then use the controls to play, pause, and navigate tracks.',
-            page: 'media-vault.html'
+            page: 'media-vault.html',
+            icon: 'res/media-vault.png'
         },
         {
             name: 'Cloud Sketch',
             description: 'A drawing and note-taking app with support for quick sketches and annotations.',
             howTo: 'Pick a brush, draw on the canvas, and save your design for later edits.',
-            page: 'cloud-sketch.html'
+            page: 'cloud-sketch.html',
+            icon: 'res/cloud-sketch.png'
         }
     ];
 
@@ -24,14 +27,10 @@
         const card = document.createElement('article');
         card.className = 'app-card';
         card.innerHTML = `
-            <div>
-                <h3>${app.name}</h3>
-                <p>${app.description}</p>
-            </div>
-            <button class="btn btn-primary card-button" type="button">View Details</button>
+            <img class="app-icon" src="${app.icon}" alt="${app.name}">
+            <h3>${app.name}</h3>
         `;
-        const button = card.querySelector('.card-button');
-        button.addEventListener('click', () => openModal(app));
+        card.addEventListener('click', () => openModal(app));
         return card;
     }
 
