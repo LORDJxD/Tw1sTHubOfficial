@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 export function Navbar() {
   const pathname = usePathname();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, isApproved } = useAuth();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
