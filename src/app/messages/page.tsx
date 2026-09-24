@@ -1,26 +1,69 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/utils/supabase";
+
+type Message = {
+  id: string;
+  text: string;
+  sender_email: string;
+  created_at: string;
+};
 
 export default function MessagesPage() {
-  const { isLoggedIn, user } = useAuth();
-  const [messages, setMessages] = useState<{id: number, text: string, sender: string}[]>([
-    { id: 1, text: "Welcome to the community chat!", sender: "System" }
-  ]);
+  const { isLoggedIn, isApproved, user, loading } = useAuth();
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  if (!isLoggedIn) {
-    return <div className="flex-1 flex items-center justify-center">Loading...</div>;
-  }
+  useEffect(() => {
+    if (!isLoggedIn || !isApproved) return;
 
-  const handleSend = (e: React.FormEvent) => {
+    // Fetch existing messages
+    const fetchMessages = async () => {
+      const { data } = await supabase
+        .from("messages")
+        .select("*")
+        .order("created_at", { ascending: true })
+        .limit(50);
+      
+      if (data) setMessages(data);
+    };
+
+    fetchMessages();
+
+    // Subscribe to new messages
+    const channel = supabase
+      .channel("public:messages")
+      .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, (payload) => {
+        setMessages((current) => [...current, payload.new as Message]);
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [isLoggedIn, isApproved]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  if (loading) return <div className="flex-1 flex items-center justify-center">Loading...</div>;
+  if (!isLoggedIn || !isApproved) return null;
+
+  const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || !user) return;
 
-    // TODO: Send to Supabase here
-    setMessages([...messages, { id: Date.now(), text: input, sender: user?.email || "User" }]);
+    const msg = input.trim();
     setInput("");
+
+    // Insert into Supabase
+    await supabase.from("messages").insert([
+      { text: msg, sender_email: user.email }
+    ]);
   };
 
   return (
@@ -29,11 +72,12 @@ export default function MessagesPage() {
       
       <div className="flex-1 overflow-y-auto bg-gray-900 rounded-xl border border-gray-800 p-4 mb-4 flex flex-col space-y-3">
         {messages.map((msg) => (
-          <div key={msg.id} className={`p-3 rounded-lg max-w-[80%] ${msg.sender === user?.email ? "bg-red-900/40 text-red-100 self-end" : "bg-gray-800 text-gray-200 self-start"}`}>
-            <span className="text-[10px] text-gray-400 block mb-1">{msg.sender}</span>
+          <div key={msg.id} className={`p-3 rounded-lg max-w-[80%] ${msg.sender_email === user?.email ? "bg-red-900/40 text-red-100 self-end" : "bg-gray-800 text-gray-200 self-start"}`}>
+            <span className="text-[10px] text-gray-400 block mb-1">{msg.sender_email}</span>
             <p className="text-sm">{msg.text}</p>
           </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
       <form onSubmit={handleSend} className="flex gap-2">

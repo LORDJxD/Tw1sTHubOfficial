@@ -1,28 +1,19 @@
--- Create a table for user profiles with an approval system
-create table public.profiles (
-  id uuid references auth.users not null primary key,
-  email text not null,
-  is_approved boolean default false,
-  role text default 'user'
+-- Create a table for chat messages
+create table if not exists public.messages (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  text text not null,
+  sender_email text not null
 );
 
 -- Enable Row Level Security
-alter table public.profiles enable row level security;
+alter table public.messages enable row level security;
 
--- Users can read their own profile
-create policy "Users can view own profile" on profiles
-  for select using (auth.uid() = id);
+-- Set up security policies for messages
+drop policy if exists "Anyone can read messages" on public.messages;
+create policy "Anyone can read messages" on public.messages
+  for select using (true);
 
--- Trigger to automatically create a profile when a new user signs up
-create or replace function public.handle_new_user() 
-returns trigger as $$
-begin
-  insert into public.profiles (id, email)
-  values (new.id, new.email);
-  return new;
-end;
-$$ language plpgsql security definer;
-
-create trigger on_auth_user_created
-  after insert on auth.users
-  for each row execute procedure public.handle_new_user();
+drop policy if exists "Authenticated users can insert messages" on public.messages;
+create policy "Authenticated users can insert messages" on public.messages
+  for insert with check (auth.role() = 'authenticated');

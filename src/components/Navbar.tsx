@@ -28,7 +28,7 @@ export function Navbar() {
     { name: "More", path: "/more", activeIcon: "/res/apps-active.png", inactiveIcon: "/res/apps-inactive.png" }
   ];
 
-  const navItems = isLoggedIn ? privateNavItems : publicNavItems;
+  const navItems = (isLoggedIn && isApproved) ? privateNavItems : publicNavItems;
 
   return (
     <nav className="fixed bottom-0 w-full h-16 md:h-20 bg-black border-t border-red-600 flex z-50 transition-all duration-300">
