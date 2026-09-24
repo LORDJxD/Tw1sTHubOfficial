@@ -15,16 +15,15 @@ const APP_LIST = [
 ];
 
 export default function MorePage() {
-  const { isLoggedIn, logout, requireAuth, user } = useAuth();
+  const { isLoggedIn, loading, logout, requireAuth, user } = useAuth();
   const router = useRouter();
   const [loadingApp, setLoadingApp] = useState<string | null>(null);
 
   useEffect(() => {
-    // If not logged in, they shouldn't really see "More" page based on the new nav, but just in case
-    if (isLoggedIn === false && localStorage.getItem("loggedIn") !== "true") {
+    if (!loading && !isLoggedIn) {
       router.push("/");
     }
-  }, [isLoggedIn, router]);
+  }, [isLoggedIn, loading, router]);
 
   const handleAppClick = (app: typeof APP_LIST[0]) => {
     if (app.disabled) return;

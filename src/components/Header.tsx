@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { NotificationsDropdown } from "./NotificationsDropdown";
 
 export function Header() {
   return (
@@ -15,6 +16,7 @@ export function Header() {
           sizes="(max-width: 768px) 128px, 160px"
         />
       </div>
+      <NotificationsDropdown />
     </header>
   );
 }

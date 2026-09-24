@@ -24,7 +24,7 @@ export function Navbar() {
 
   const privateNavItems = [
     { name: "Home", path: "/", activeIcon: "/res/home-active.png", inactiveIcon: "/res/home-inactive.png" },
-    { name: "Messages", path: "/notifications", activeIcon: "/res/notification-active.png", inactiveIcon: "/res/notification-inactive.png" },
+    { name: "Messages", path: "/messages", activeIcon: "/res/notification-active.png", inactiveIcon: "/res/notification-inactive.png" },
     { name: "More", path: "/more", activeIcon: "/res/apps-active.png", inactiveIcon: "/res/apps-inactive.png" }
   ];
 
