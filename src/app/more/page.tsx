@@ -15,7 +15,7 @@ const APP_LIST = [
 ];
 
 export default function MorePage() {
-  const { isLoggedIn, logout, requireAuth } = useAuth();
+  const { isLoggedIn, logout, requireAuth, user } = useAuth();
   const router = useRouter();
   const [loadingApp, setLoadingApp] = useState<string | null>(null);
 
@@ -52,7 +52,7 @@ export default function MorePage() {
           <span className="text-4xl">👤</span>
         </div>
         <div className="flex-1 text-center md:text-left">
-          <h2 className="text-2xl font-bold text-white mb-1">Admin Account</h2>
+          <h2 className="text-xl md:text-2xl font-bold text-white mb-1 truncate">{user?.email || "Account"}</h2>
           <p className="text-sm text-gray-400 mb-4">Manage your Tw1sT Official profile and settings.</p>
           <button 
             onClick={logout}

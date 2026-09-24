@@ -2,38 +2,42 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { supabase } from "@/utils/supabase";
+import { User } from "@supabase/supabase-js";
 
 export function useAuth() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem("loggedIn") === "true";
-    setIsLoggedIn(loggedIn);
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    // Listen for changes (login/logout)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  const login = (password: string) => {
-    if (password === "admin") {
-      localStorage.setItem("loggedIn", "true");
-      setIsLoggedIn(true);
-      return true;
-    }
-    return false;
-  };
-
-  const logout = () => {
-    localStorage.removeItem("loggedIn");
-    setIsLoggedIn(false);
+  const logout = async () => {
+    await supabase.auth.signOut();
     router.push("/login");
   };
 
   const requireAuth = (callback: () => void) => {
-    if (isLoggedIn) {
+    if (user) {
       callback();
     } else {
       router.push("/login");
     }
   };
 
-  return { isLoggedIn, login, logout, requireAuth };
+  return { user, isLoggedIn: !!user, loading, logout, requireAuth };
 }
