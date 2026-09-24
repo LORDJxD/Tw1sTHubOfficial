@@ -62,11 +62,24 @@ export default function LoginPage() {
     setLoadingForm(true);
     setError("");
 
-    const { error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({ email, password });
     
     if (error) {
       setError(error.message);
     } else {
+      if (data?.user) {
+        // Also register profile row for the admin to see in pending approvals
+        try {
+          await supabase.from("profiles").upsert({
+            id: data.user.id,
+            email: email,
+            is_approved: false,
+            created_at: new Date().toISOString()
+          });
+        } catch {
+          // Trigger will handle if present
+        }
+      }
       setError("Application submitted! Log in to check your approval status.");
     }
     setLoadingForm(false);

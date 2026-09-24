@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { useState, useEffect } from "react";
@@ -15,7 +16,7 @@ const APP_LIST = [
 ];
 
 export default function MorePage() {
-  const { isLoggedIn, loading, logout, requireAuth, user } = useAuth();
+  const { isLoggedIn, loading, logout, requireAuth, user, isAdmin } = useAuth();
   const router = useRouter();
   const [loadingApp, setLoadingApp] = useState<string | null>(null);
 
@@ -51,14 +52,32 @@ export default function MorePage() {
           <span className="text-4xl">👤</span>
         </div>
         <div className="flex-1 text-center md:text-left">
-          <h2 className="text-xl md:text-2xl font-bold text-white mb-1 truncate">{user?.email || "Account"}</h2>
+          <div className="flex flex-col md:flex-row md:items-center gap-2 mb-1">
+            <h2 className="text-xl md:text-2xl font-bold text-white truncate">{user?.email || "Account"}</h2>
+            {isAdmin && (
+              <span className="self-center md:self-auto px-2.5 py-0.5 rounded text-xs font-bold uppercase bg-red-950 text-red-400 border border-red-800">
+                Admin
+              </span>
+            )}
+          </div>
           <p className="text-sm text-gray-400 mb-4">Manage your Tw1sT Official profile and settings.</p>
-          <button 
-            onClick={logout}
-            className="w-full md:w-auto px-6 py-2 rounded bg-red-600 hover:bg-red-700 text-white font-bold transition-colors active:scale-95 text-sm md:text-base"
-          >
-            Logout
-          </button>
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className="w-full md:w-auto px-6 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-bold transition-all shadow-lg shadow-red-900/30 active:scale-95 text-sm md:text-base flex items-center justify-center gap-2"
+              >
+                <span>⚙️</span>
+                Admin Dashboard
+              </Link>
+            )}
+            <button 
+              onClick={logout}
+              className="w-full md:w-auto px-6 py-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-200 font-bold transition-colors active:scale-95 text-sm md:text-base"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </section>
 
